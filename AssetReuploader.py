@@ -21,9 +21,23 @@ httpSession.cookies[".ROBLOSECURITY"] = securityKey
 httpSession.headers["x-csrf-token"] = token
 httpSession.headers["Content-Type"] = "application/json"
 
-response = httpSession.get("https://assetdelivery.roblox.com/v1/asset/?id=11558867190")
-print(response.status_code)
+file = open("Assets/test.mp3", "rb")
+
+requestData = {
+    "requests": [
+        {
+        "name": "TEST",
+        "file": file,
+        "groupId": 6620912,
+        "assetPrivacy": "Private"
+        }
+    ]
+}
+
+response = httpSession.post("https://publish.roblox.com/v1/audio", data = json.dumps(requestData))
+print(response)
 print(response.content)
+print(response.text)
 
 # assetIds.replace(" ", "")
 # assetIdList = assetIds.split(",")
