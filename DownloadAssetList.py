@@ -16,7 +16,8 @@ class bcolors:
 # File types
 FILE_TYPE_MAPPING = {
     "audio": ".mp3",
-    "3": ".mp3"
+    "3": ".mp3",
+    "image": ".img"
 }
 
 # Required files
@@ -72,7 +73,10 @@ if not os.path.exists(directory):
         if not os.path.exists(fileTypeDirectory):
             os.makedirs(fileTypeDirectory)
         try:
-            subprocess.run("rbxmk download-asset --id " + id + " " + fileTypeDirectory + "/" + name + fileType + " " + "--cookies-file " + cookiesFile.name)
+            if fileType == ".mp3":
+                subprocess.run("rbxmk download-asset --id " + id + " " + fileTypeDirectory + "/" + name + fileType + " " + "--cookies-file " + cookiesFile.name)
+            elif fileType == ".img":
+                subprocess.run("rbxmk run DownloadImage.lua " + name + " " + id + " " + fileTypeDirectory)
         except:
             print(bcolors.FAIL + counterText + "An error occured when trying to download asset " + "(" + id + "/" + name + ")" + bcolors.ENDC)
         else:
